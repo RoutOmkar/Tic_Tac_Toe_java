@@ -4,15 +4,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.*;
 
 public class main_class extends JFrame implements ActionListener {
 	JButton b1,b2,b3,b4,b5,b6,b7,b8,b9;
 	boolean player1turn=true;
 	JButton Winning_zone[][];
+	JLabel l1;
 	
 	
 	main_class(){
 		super("TIC TAC TOE GAME");
+		
+		l1=new JLabel("TIC TAC TOE GAME ");
+		l1.setBounds(150, 50, 400, 50);
+		l1.setFont(new Font("Verdana", Font.BOLD, 36));
+		l1.setForeground(new Color(255, 255, 255));
+		add(l1);
 		
 		b1=new JButton();
 		b1.setBounds(200,200,70,70);
@@ -111,9 +119,11 @@ public class main_class extends JFrame implements ActionListener {
 		
 		
 		setLayout(null);
-		setSize(850,850);
-		setLocation(0,0);
+		setSize(700,700);
+		setLocationRelativeTo(null);
 		setVisible(true);
+		getContentPane().setBackground(new Color(30, 30, 30));
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	}
 	
 	
@@ -130,10 +140,12 @@ public class main_class extends JFrame implements ActionListener {
 					if(player1turn)
 					{
 					i.setText("X");
+					i.setForeground(new Color(138, 43, 226));
 					
 					}else
 					{
 						i.setText("O");
+						i.setForeground(new Color(0, 128, 128));
 					}
 					player1turn = !player1turn;
 					checkwinner();
@@ -156,16 +168,50 @@ public class main_class extends JFrame implements ActionListener {
 						if(s1.equals("X"))
 						{
 							JOptionPane.showMessageDialog(null,"The player X won the match .");
-							RefreshPage();
+							//RefreshPage();
+							
 						}
-						else
+						else if(s1.equals("O"))
 						{
 							JOptionPane.showMessageDialog(null,"The player O won the match .");
+							//RefreshPage();
+						}
+						int choice=JOptionPane.showConfirmDialog(main_class.this, "Restart Game?", "Game Over", JOptionPane.YES_NO_OPTION);
+						if(choice==JOptionPane.YES_OPTION) {
 							RefreshPage();
 						}
+						else {
+							System.exit(0);
+							
 					}
+						return;
 				}
 			}
+			}
+			boolean allFieldFull=true;
+			JButton n1[]= {b1,b2,b3,b4,b5,b6,b7,b8,b9};
+			for (JButton i:n1)
+			{
+				if(i.getText().equals(""))
+				{
+					allFieldFull=false;
+					break;
+				}
+			}
+			
+			if(allFieldFull) {
+				JOptionPane.showMessageDialog(null,"The match is TIE !");
+				int choice=JOptionPane.showConfirmDialog(main_class.this, "Restart Game?", "Game Over", JOptionPane.YES_NO_OPTION);
+				if(choice==JOptionPane.YES_OPTION) {
+					RefreshPage();
+				}
+				else {
+					System.exit(0);
+					
+			}
+				
+			}
+			
 		}
 		
 	public void RefreshPage() {
